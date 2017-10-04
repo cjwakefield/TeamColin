@@ -10,14 +10,14 @@ This project can be broken into two main components. The first part is taking th
 
 This first component is arguably the most complex of the two. We have determined that the best way to draw each function would be to solve the function for various values of X, or whatever the variable might be in the function.
 
-Here is an example of how this would work outside the code: <example of input/output chart in word>
+Here is an example of how this would work outside the code: -example of input/output chart in word-
 
 On a number grid in an (X,Y) format, the values in the “input” column are the X values and the values in the “output” column are the Y values. 
 
-While a rather trivial algebraic problem, this becomes more complicated when done in Java. The basic idea is that the program will read in a string (the function) as input from the user, then <information on how the program solves the function for every given point>
+While a rather trivial algebraic problem, this becomes more complicated when done in Java. The basic idea is that the program will read in a string (the function) as input from the user, then -information on how the program solves the function for every given point-
   
 ## Displaying The Function
 
 The second component of the project is the displaying of information to the user. This incorporates the use of Java GUIs, something we have not learned in class yet. The user will first see a graph on which the function will be drawn. To draw the function, the program will take the points that the first component of the program calculated, then place them onto the grid in the displayed interface. 
 
-<information on how this is accomplished in java>
+-information on how this is accomplished in java-
