@@ -1,3 +1,4 @@
+package backEnd;
 /*
  * by Colin Wakefield
  * email cjwakefield@ksu.edu
@@ -12,7 +13,8 @@ public class Solver
 	public static void main(String args[])
 	{
 		Solver s = new Solver(); 
-		System.out.print(s.solveForX(1, "15*3^12+(15^2)" )); 
+		
+		System.out.print(s.solveForX(1, "-1+1" )); 
 	}
 	/**solve
 	 * This method solves a equation is infix notation
@@ -23,7 +25,6 @@ public class Solver
 	public double solve(String equation)
 	{
 		Parser p = new Parser(); 
-		solveInner(p.parse(equation)) ; 
 		return solveInner(p.parse(equation)) ; 
 	}
 	/**solveForX
@@ -63,6 +64,7 @@ public class Solver
 			case "/" : hold.add(div( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
 			case "+" : hold.add(add( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
 			case "-" : hold.add(sub( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
+			case "_" : hold.add(invert(hold.remove(hold.size()-1 ))); break ; 
 			default : hold.add(parsedEquation.get(x));
 			}
 		}
@@ -111,6 +113,17 @@ public class Solver
 	private String add(String a , String b )
 	{
 		return (Double.parseDouble(a)+ Double.parseDouble(b))+""; 
+	}
+	/**invert
+	 * This is a method that inverts 
+	 * 
+	 * @param This is the input string 
+	 * @param This is the input string 
+	 * @return returns a string that is inverted  
+	 */
+	private String invert(String a)
+	{
+		return (-Double.parseDouble(a)) +"";
 	}
 	/**sub
 	 * This is a method that subtracts two strings 

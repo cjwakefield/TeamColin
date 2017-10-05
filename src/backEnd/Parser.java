@@ -1,3 +1,4 @@
+package backEnd;
 /*
  * by Colin Wakefield
  * email cjwakefield@ksu.edu
@@ -36,11 +37,13 @@ public class Parser
 			case "7" :SingleInt.add("7"); break ;
 			case "8" :SingleInt.add("8"); break ;
 			case "9" :SingleInt.add("9"); break ;
-			case "^" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "^" );  SingleInt = new ArrayList<String>();  break ;
+			case "^" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "^" );  SingleInt = new ArrayList<String>(); break ;
 			case "*" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "*" ); SingleInt = new ArrayList<String>();  break ;
 			case "/" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "/" ); SingleInt = new ArrayList<String>();  break ;
 			case "+" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "+" ); SingleInt = new ArrayList<String>();  break ;
 			case "-" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "-" ); SingleInt = new ArrayList<String>();  break ;
+			case "_" :operators.add("_");break ;
+
 			}
 			//System.out.println("outPut"+outPut);
 			//System.out.println("SingleInt"+SingleInt);
@@ -61,12 +64,14 @@ public class Parser
 	 * @param The string to be formated.
 	 * @return The arrayList of strings that will be used in the parse equation.
 	 */
-	private String[] format(String s )
+	private String[] format(String equation )
 	{
-		s = s.replaceAll("\\s","");
+		equation = equation.replaceAll("\\s","");
 		//equation = "("+equation+")"; 
-		String[] sList = s.split(""); 
-		return sList ; 
+		String[] equationList = equation.split(""); 
+		equationList = parseNegatives(equationList); 
+
+		return equationList ; 
 	}
 	/**CompundInt
 	 * This method compounds a Arraylist of ints in to one integer
@@ -150,6 +155,7 @@ public class Parser
 		int tmp = 0; 
 		switch(operator)
 		{
+		case "_" : tmp = 1000; break;
 		case "(" : tmp = -999; break;
 		case "^" : tmp = 300; break;
 		case "*" : tmp = 200; break;
@@ -157,6 +163,7 @@ public class Parser
 		case "\\" : tmp = 200; break;
 		case "+" : tmp = 100; break;
 		case "-" : tmp = 100; break;
+		default : tmp = 0; break;
 		}
 		return tmp ; 
 	}
@@ -173,6 +180,28 @@ public class Parser
 			out.add(0 ,x ); 
 		}
 		return out ; 
+	}
+	/**parseNegatives
+	 * This method will decide what is negative and what is not. 
+	 * 
+	 * @param This is the equation input 
+	 * @return This returns a new equation that has _ as negative and - as subtraction ;  
+	 */
+	private String[] parseNegatives(String[] equationList)
+	{
+		int x = 0 ; 
+		while(x < equationList.length)
+		{
+			if(equationList[x].equals("-"))
+			{
+				if(getOperatorValue(equationList[x+1]) <=  0   )
+				{
+					equationList[x] = "_"; 
+				}
+			}
+			x++;
+		}
+		return equationList; 
 	}
 
 }
