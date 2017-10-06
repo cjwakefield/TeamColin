@@ -43,6 +43,8 @@ public class Parser
 			case "+" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "+" ); SingleInt = new ArrayList<String>();  break ;
 			case "-" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "-" ); SingleInt = new ArrayList<String>();  break ;
 			case "_" :operators.add("_");break ;
+			case "x" :CompundInt(SingleInt , outPut) ; SingleInt.add("x"); break ;
+
 
 			}
 			//System.out.println("outPut"+outPut);

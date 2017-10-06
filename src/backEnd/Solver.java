@@ -14,7 +14,7 @@ public class Solver
 	{
 		Solver s = new Solver(); 
 		
-		System.out.print(s.solveForX(1, "-1+1" )); 
+		System.out.print(s.solveForX(2, "2*x+x^x" )); 
 	}
 	/**solve
 	 * This method solves a equation is infix notation
@@ -36,10 +36,8 @@ public class Solver
 	public double solveForX(double x , String equation)
 	{
 		Parser p = new Parser(); 
-		equation = equation.replaceAll("x", x+""); 
-		//System.out.println(equation);
-		solveInner(p.parse(equation)) ; 
-		return solveInner(p.parse(equation)) ; 
+		ArrayList<String> listEquation = SetX(p.parse(equation),x);
+		return solveInner(listEquation) ; 
 	}
 	/**solveInner
 	 * This is the inner solve method that does the actual solving of a full set up equation
@@ -69,6 +67,17 @@ public class Solver
 			}
 		}
 		return Double.parseDouble(hold.get(0)) ; 
+	}
+	private ArrayList<String> SetX(ArrayList<String> parsedEquation ,double xIn)
+	{
+		for(int x = 0 ; x < parsedEquation.size(); x++)
+		{
+			if(parsedEquation.get(x).equals("x"))
+			{
+				parsedEquation.set(x, xIn+""); 
+			}
+		}
+		return parsedEquation; 
 	}
 	/**pow
 	 * This is a method that takes the power of a two string inputs 
