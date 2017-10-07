@@ -24,7 +24,7 @@ public class Main_Screen extends JPanel implements Runnable
     	graphStart = -screenWidth/2; 
     	graphEnd = screenWidth/2; 
 
-    	//setings for the JFrame
+    	//settings for the JFrame
         frame = new JFrame();
         frame.setLayout(null);
         frame.setResizable(false);
