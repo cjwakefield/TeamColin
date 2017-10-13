@@ -49,7 +49,7 @@ public class Main_Screen extends JPanel implements Runnable
     public void paintComponent(Graphics g)
     {
     	Graphics2D g2 = (Graphics2D)g ; 
-    	GraphDrawer gd = new GraphDrawer(screenWidth,screenHeight , "   (1/20)*x^3+5*x^2-7*x  "); 
+    	GraphDrawer gd = new GraphDrawer(screenWidth,screenHeight , "   (1/1000)*x^3+5*x^2-7*x  "); 
     	gd.DrawGraph(g2 ,graphStart , graphEnd ); 
 
     }

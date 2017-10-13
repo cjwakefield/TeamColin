@@ -44,18 +44,15 @@ public class Parser
 			case "-" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "-" ); SingleInt = new ArrayList<String>();  break ;
 			case "_" :operators.add("_");break ;
 			case "x" :CompundInt(SingleInt , outPut) ; SingleInt.add("x"); break ;
-
-
 			}
 			//System.out.println("outPut"+outPut);
 			//System.out.println("SingleInt"+SingleInt);
 			//System.out.println("operators"+operators);
-
-
 		}
 		
 		if(SingleInt.size() >= 1)
-		CompundInt(SingleInt , outPut);
+			CompundInt(SingleInt , outPut);
+		
 		outPut.addAll(invert(operators));
 		
 		return outPut ; 
@@ -76,7 +73,7 @@ public class Parser
 		return equationList ; 
 	}
 	/**CompundInt
-	 * This method compounds a Arraylist of ints in to one integer
+	 * This method compounds an Arraylist of integers into one integer
 	 * 
 	 * @param This is the list that will be compounded.
 	 * @param This is the outPut list that will be outPut in the end.
@@ -85,12 +82,12 @@ public class Parser
 	{
 		if(IntList.size()> 0 )
 		{
-		String tmp = "" ; 		
-		for(int x = 0 ; x < IntList.size() ; x ++ )
-		{
-			tmp += IntList.get(x); 
-		}
-		outPut.add(tmp); 
+			String tmp = "" ; 		
+			for(int x = 0 ; x < IntList.size() ; x ++ )
+			{
+				tmp += IntList.get(x); 
+			}
+			outPut.add(tmp); 
 		}
 	}
 	/**HandleClosing
@@ -131,16 +128,17 @@ public class Parser
 		if(operators.size() > 0 && !inputOp.equals("("))
 		{
 			int inputOpNum = getOperatorValue(inputOp);
-
-				ArrayList<String> tmp = new ArrayList<String>() ; 
-				int x = operators.size()-1 ; 
-				while(x >= 0 && inputOpNum <= getOperatorValue(operators.get(x)))
-				{
-					tmp.add(operators.remove(x)); 
-					x--;
-				}
-				outPut.addAll(tmp);
-				operators.add(inputOp); 
+			ArrayList<String> tmp = new ArrayList<String>() ;
+			
+			int x = operators.size()-1 ; 
+			while(x >= 0 && inputOpNum <= getOperatorValue(operators.get(x)))
+			{
+				tmp.add(operators.remove(x)); 
+				x--;
+			}
+			
+			outPut.addAll(tmp);
+			operators.add(inputOp); 
 		}
 		else
 		{
@@ -167,6 +165,7 @@ public class Parser
 		case "-" : tmp = 100; break;
 		default : tmp = 0; break;
 		}
+		
 		return tmp ; 
 	}
 	/**invert
@@ -181,6 +180,7 @@ public class Parser
 		{
 			out.add(0 ,x ); 
 		}
+		
 		return out ; 
 	}
 	/**parseNegatives
@@ -203,6 +203,7 @@ public class Parser
 			}
 			x++;
 		}
+		
 		return equationList; 
 	}
 
