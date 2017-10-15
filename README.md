@@ -1,23 +1,30 @@
 Note from Colin G: This is all the raw text from the document. I will stick it into Word and format it nicely, add stuff like our names, etc. once I turn it in. The paper is due Monday (10/9/17) night.
 
-# Project Proposal Paper
+The project that our team has decided to work on is creating a graphing calculator. This calculator will be capable of taking any function as input, then drawing said function in a GUI for the user to see. It will all be done in Java	.								
 
-The project that our team has decided to work on is creating a graphing calculator. This calculator will be capable of taking any function as input, then drawing said function in a GUI for the user to see. It will all be done in Java.
+This project can be broken into two main components. The first part is taking the user input, the function, and determining how to draw the function. The second part is taking said function and drawing it on the GUI output.								
 
-This project can be broken into two main components. The first part is taking the user input, the function, and determining how to draw the function. The second part is taking said function and drawing it on the GUI output. 
+This first component is arguably the most complex of the two. We have determined that the best way to draw each function would be to solve the function for various values of X, or whatever the variable might be in the function.							
 
-## Calculating Function Points
+Here is an example of how this would work outside the code:
 
-This first component is arguably the most complex of the two. We have determined that the best way to draw each function would be to solve the function for various values of X, or whatever the variable might be in the function.
+On a number grid in an (X,Y) format, the values in the “input” column are the X values and the values in the “output” column are the Y values.							
 
-Here is an example of how this would work outside the code: -example of input/output chart in word-
+While a rather trivial algebraic problem, this becomes more complicated when done in Java. The basic idea is that the program will read in a string (the function) as input from the user, format the string into something that our code can solve, solve it, then pass this information over to the GUI classes. 									
 
-On a number grid in an (X,Y) format, the values in the “input” column are the X values and the values in the “output” column are the Y values. 
+First, the Solver class is passed information about the function from the GraphDrawer class. The aptly named GraphDrawer class is used for drawing the graph, so this will be explained further later. The function to be solved is passed into the solveForX method. The first step is then to parse the equation into something that the program can use. 				
 
-While a rather trivial algebraic problem, this becomes more complicated when done in Java. The basic idea is that the program will read in a string (the function) as input from the user, then -information on how the program solves the function for every given point-
-  
-## Displaying The Function
+To do this, the program passes the function over to yet a different class, Parser. There is a parse method within the Parser class that returns an ArrayList data type. This ArrayList will be the output for the graph. The basic idea here is that we need to turn the function from “infix” to “postfix.” Infix is the means people normally format functions when working with them. The problem is that this is difficult for a computer to work with. The superior option is postfix. The key difference is that in infix operators are written between the operands (2+2), and in postfix the operators are written after their operands (22+). The order of operations in postfix is always simply left to right. Operators act on values to the left of themselves, and brackets are not necessary. 	
 
-The second component of the project is the displaying of information to the user. This incorporates the use of Java GUIs, something we have not learned in class yet. The user will first see a graph on which the function will be drawn. To draw the function, the program will take the points that the first component of the program calculated, then place them onto the grid in the displayed interface. 
+The parse method first pushes the equation to the format method. This method simply uses split() to format our function, a string, into an array that can be used by our program. This method is also where any negative numbers are formatted properly for our program. The normal means of designating a negative number (-) is not adequate, as it is the same sign as the subtraction operator. We thus replace said symbol with a “_” to designate the number as negative. This process occurs in the parseNegatives method.						
 
--information on how this is accomplished in java-
+The parse method then reads through all the characters in our function and decides what to do with each one depending on hardcoded instructions. If the character is a number, parse adds the character to an ArrayList (SingleInt). If the character is an operator (^, +, etc.), parse figures out where the operator needs to be in our postfix formatted function, then adds it to the earlier referenced ArrayList with the numbers. It does all of this by running through a switch statement the number of times that the ArrayList is long. 					
+We also have to format parentheses properly. The program does this by reading in the first parentheses to the SingleInt ArrayList in addition to everything that comes after it. Then, when the program encounters the closing parentheses, it pulls anything read from in between the brackets, formats it into the desired order, then puts them into the final “output” ArrayList.		
+
+Once the function has been formatted properly, the program can solve it. In the GraphDrawer class, a for loop continuously calls the solveForX method for each X value in the interval in which we wish to view the function. The solveForX method solves the function by replacing the X value with the numerical value it is testing in that instance. When it encountesr an operator in the ArrayList, it looks at the previous two operands in the array and computes the necessary operation with them. It then replaces these characters with the resulting double in the ArrayList. It repeats this process until the array has been exhausted for operations to be done, resulting in the Y-value corresponding to the X-value we gave it.	
+
+The second component of the project is the displaying of information to the user. This incorporates the use of Java GUIs, something we have not learned in class yet. The user will first see a graph on which the function will be drawn. To draw the function, the program will take the points that the first component of the program calculated, then place them onto the grid in the displayed interface. 										
+Main_Calc creates a Main_Screen object which draws a screen for the graph. A jframe is created for the output. Main_Screen then creates and calls a GraphDrawer object. This GraphDrawer object is where things mostly happen. This class asks the user for a function to draw, then computes it through the solveForX method. The user inputs the desired function in the GUI interface via a box above the graph. This class also draws the white background for our graph and the X and Y axis lines (both with the DrawBackground method) in addition to the function once calculated (with the DrawGraph_Private method). 		
+
+The user is also able to input more than one function through the GraphDrawer method. The functions are held in an ArrayList that are displayed in the Main_Screen object. The GUI displays all the functions at once. To accomplish this, GraphDrawer simply loops in the DrawGraph_Private method until all the functions have been drawn onto the interface. Each function is simply drawn on top of the last. 								
+Through all of this we can successfully take any function as input from a user and display it in a GUI output in Java.
