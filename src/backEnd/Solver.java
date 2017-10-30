@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class Solver 
 {
+	ArrayList<String> parsed ; 
 	//This main is for testing only 
 	public static void main(String args[])
 	{
-		Solver s = new Solver(); 
-		
-		System.out.print(s.solveForX(2, "2*x+x^x" )); 
+		Solver s = new Solver();
+		s.setParsed("x^2");
+		System.out.print(s.solveForX(2));
 	}
 	/**solve
 	 * This method solves a equation is infix notation
@@ -22,10 +23,14 @@ public class Solver
 	 * @param This is the operator that is being set to a value 
 	 * @return This returns the solved equation for the equation  
 	 */
-	public double solve(String equation)
+	public double solve()
+	{
+		return solveInner(parsed) ; 
+	}
+	public void setParsed(String equation)
 	{
 		Parser p = new Parser(); 
-		return solveInner(p.parse(equation)) ; 
+		parsed = p.parse(equation);
 	}
 	/**solveForX
 	 * This method solves a equation is infix notation
@@ -33,10 +38,10 @@ public class Solver
 	 * @param This is the operator that is being set to a value 
 	 * @return This returns the solved equation for the equation  
 	 */
-	public double solveForX(double x , String equation)
+	public double solveForX(double x )
 	{
-		Parser p = new Parser(); 
-		ArrayList<String> listEquation = SetX(p.parse(equation),x);
+		ArrayList<String> listEquation = SetX(x);
+		//System.out.println(listEquation);
 		return solveInner(listEquation) ; 
 	}
 	/**solveInner
@@ -68,8 +73,11 @@ public class Solver
 		}
 		return Double.parseDouble(hold.get(0)) ; 
 	}
-	private ArrayList<String> SetX(ArrayList<String> parsedEquation ,double xIn)
+	private ArrayList<String> SetX(double xIn)
 	{
+		@SuppressWarnings("unchecked")
+		ArrayList<String> parsedEquation = (ArrayList<String>) parsed.clone(); 
+		
 		for(int x = 0 ; x < parsedEquation.size(); x++)
 		{
 			if(parsedEquation.get(x).equals("x"))
@@ -77,8 +85,8 @@ public class Solver
 				parsedEquation.set(x, xIn+""); 
 			}
 		}
-		return parsedEquation; 
-	}
+		return parsedEquation;  
+	}	
 	/**pow
 	 * This is a method that takes the power of a two string inputs 
 	 * 

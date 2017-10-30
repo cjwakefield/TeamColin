@@ -2,13 +2,18 @@ package Screen;
 import java.awt.*;
 import javax.swing.*;
 
-import backEnd.GraphDrawer;
+import backEnd.GraphHandler;
 
 public class Main_Screen extends JPanel implements Runnable
 {
-    private JFrame frame;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JFrame frame;
     private int screenWidth , screenHeight  , graphStart , graphEnd; 
     private Thread t ; 
+    GraphHandler gh ; 
     private boolean running = true  ; 
     
     public Main_Screen(String title)
@@ -32,7 +37,7 @@ public class Main_Screen extends JPanel implements Runnable
         frame.add(this); 
         
         this.setDoubleBuffered(true);
-        this.setBounds(0,0,500, 500);
+        this.setBounds(0,0,screenWidth, screenHeight);
         this.setVisible(true);
         
         
@@ -44,17 +49,20 @@ public class Main_Screen extends JPanel implements Runnable
         frame.setSize(screenWidth, screenHeight);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
+        //classes 
+        gh = new GraphHandler(screenWidth,screenHeight );
+    	gh.add("x+2");
     }
     @Override
     public void paintComponent(Graphics g)
     {
     	Graphics2D g2 = (Graphics2D)g ; 
-    	GraphDrawer gd = new GraphDrawer(screenWidth,screenHeight , "   (1/1000)*x^3+5*x^2-7*x  "); 
-    	gd.DrawGraph(g2 ,graphStart , graphEnd ); 
+    	gh.Draw(g2 ,graphStart , graphEnd ); 
 
     }
 	@Override
-	public void run() 
+	public void run()  
 	{
 		while(running)
 		{
@@ -63,8 +71,12 @@ public class Main_Screen extends JPanel implements Runnable
 			try {
 				Thread.sleep(100);// is a wait for the loop 
 				} 
-			catch (InterruptedException e) {e.printStackTrace();}
+			catch (InterruptedException e) 
+			{
+				e.printStackTrace();
+			}
 			running = false ;
+	
 		}
 	}
 	public void update()
