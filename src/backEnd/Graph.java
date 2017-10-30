@@ -24,8 +24,8 @@ public class Graph
 		{
 			ScaledCounter = ScaledCounter - Scale ; 
 			Counter -= 1 ; 
-			int y = (int)s.solveForX(ScaledCounter); 
-			int y2 = (int)s.solveForX(ScaledCounter+Scale); 
+			int y = (int) (s.solveForX(ScaledCounter)/Scale); 
+			int y2 = (int) (s.solveForX(ScaledCounter+Scale)/Scale); 
 
 			g2.drawLine( (int)(screenMiddleW+ Counter) , (int)(screenMiddleH-y), (int)(screenMiddleW+Counter+1), (int)(screenMiddleH-y2)); 
 		}

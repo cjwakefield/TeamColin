@@ -52,8 +52,8 @@ public class Main_Screen extends JPanel implements Runnable
         
         //classes 
         gh = new GraphHandler(screenWidth,screenHeight );
-    	gh.add("x^3 +23");
-    	gh.setScale(1);
+    	gh.add("x^2+1");
+    	gh.setScale(.01);
     }
     @Override
     public void paintComponent(Graphics g)

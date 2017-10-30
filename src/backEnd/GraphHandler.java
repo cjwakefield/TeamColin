@@ -31,6 +31,30 @@ public class GraphHandler
 	{
 		g2.drawLine(screenWidth/2, 0, screenWidth/2, screenHeight);
 		g2.drawLine(0, screenHeight/2, screenWidth, screenHeight/2);
+		int dashedLineSpace = (int) (1/scale) ; 
+		if(dashedLineSpace > 1 )
+		{
+			for(int x = screenWidth/2 ; x < screenWidth; x+= dashedLineSpace)
+				g2.drawLine(x, (screenWidth/2)-3, x, (screenWidth/2)+3);
+			
+			for(int y = screenHeight/2 ; y < screenHeight; y+= dashedLineSpace)
+				g2.drawLine((screenHeight/2)-3, y, (screenHeight/2)+3, y);
+			
+			for(int x = screenWidth/2 ; x > 0; x-= dashedLineSpace)
+				g2.drawLine(x, (screenWidth/2)-3, x, (screenWidth/2)+3);
+			
+			for(int y = screenHeight/2 ; y > 0; y-= dashedLineSpace)
+				g2.drawLine((screenHeight/2)-3, y, (screenHeight/2)+3, y);
+		}
+		else
+		{
+			 dashedLineSpace = (int) (5*scale) ; 
+			for(int x = screenWidth/2 ; x < screenWidth; x+= dashedLineSpace)
+				g2.drawLine(x, (screenHeight/2)-3, x, (screenHeight/2)+3);
+			for(int x = screenWidth/2 ; x > 0; x-= dashedLineSpace)
+				g2.drawLine(x, (screenHeight/2)-3, x, (screenHeight/2)+3);
+		}
+	
 	}
 	public void add(String equation)
 	{
