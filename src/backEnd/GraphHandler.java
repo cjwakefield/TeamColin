@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class GraphHandler
 {
-	private int screenWidth , screenHeight , screenMiddleW , screenMiddleH; 
+	private int screenWidth , screenHeight , screenMiddleW , screenMiddleH ; 
+	private double scale ; 
 	private ArrayList<Graph> equations;  
 	public GraphHandler(int width , int height )
 	{
@@ -23,7 +24,7 @@ public class GraphHandler
     	g2.setColor(Color.red);
     	for(Graph g : equations)
     	{
-    		g.Draw(g2 ,start , end); 
+    		g.Draw(g2 ,start , end , scale); 
     	}
 	}
 	private void DrawBackGround(Graphics2D g2)
@@ -38,5 +39,9 @@ public class GraphHandler
 	public void remove(int x)
 	{
 		equations.remove(x); 
+	}
+	public void setScale(double scale )
+	{
+		this.scale = scale; 
 	}
 }

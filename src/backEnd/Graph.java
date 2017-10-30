@@ -12,25 +12,22 @@ public class Graph
 		this.screenMiddleW = screenMiddleW;
 		this.screenMiddleH = screenMiddleH; 
 	}
-	public void Draw(Graphics2D g2 , int Start , int End)
+	public void Draw(Graphics2D g2 , int Start , int End , double Scale)
 	{
-		System.out.println(Start +" "+ End);
 		Solver s = new Solver(); 
 		s.setParsed(equation); 
-		for(int x = End ; x > Start ; x--)
+		double ScaledEnd = (int)End*Scale; 
+
+		double ScaledCounter = ScaledEnd ;
+		double Counter = End ; 
+		while ( Counter >= Start )
 		{
-			System.out.println(x);
-			int y = (int)s.solveForX(x); 
-			int y2 = (int)s.solveForX(x+1); 
-			//System.out.println(y);
-			//System.out.println(y2);
-			//System.out.println((screenMiddleH-y2));
-			//System.out.println((screenMiddleW+x+1));
-			//System.out.println((screenMiddleH-y));
-			//System.out.println((screenMiddleW+ x));
-			System.out.println((screenMiddleH));
-			System.out.println((screenMiddleW));
-			g2.drawLine((screenMiddleW+ x), (screenMiddleH-y), (screenMiddleW+x+1), (screenMiddleH-y2)); 
+			ScaledCounter = ScaledCounter - Scale ; 
+			Counter -= 1 ; 
+			int y = (int)s.solveForX(ScaledCounter); 
+			int y2 = (int)s.solveForX(ScaledCounter+Scale); 
+
+			g2.drawLine( (int)(screenMiddleW+ Counter) , (int)(screenMiddleH-y), (int)(screenMiddleW+Counter+1), (int)(screenMiddleH-y2)); 
 		}
 	}
 }
