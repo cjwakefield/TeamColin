@@ -2,6 +2,7 @@ package Screen;
 import java.awt.*;
 import javax.swing.*;
 
+import backEnd.Graph;
 import backEnd.GraphHandler;
 
 public class Main_Screen extends JPanel implements Runnable
@@ -51,9 +52,13 @@ public class Main_Screen extends JPanel implements Runnable
         frame.setVisible(true);
         
         //classes 
+        //graph
         gh = new GraphHandler(screenWidth,screenHeight );
     	gh.add("x^2+1");
+    	gh.add("x^7---x^2");
     	gh.setScale(.01);
+    	//list on screen  
+    	//JList<Graph> myList = new JList<Graph>(data);
     }
     @Override
     public void paintComponent(Graphics g)

@@ -42,7 +42,6 @@ public class Parser
 			case "/" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "/" ); SingleInt = new ArrayList<String>();  break ;
 			case "+" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "+" ); SingleInt = new ArrayList<String>();  break ;
 			case "-" :CompundInt(SingleInt , outPut);pickOperatorPosition(operators ,outPut, "-" ); SingleInt = new ArrayList<String>();  break ;
-			case "_" :operators.add("_");break ;
 			case "x" :CompundInt(SingleInt , outPut) ; SingleInt.add("x"); break ;
 			}
 			//System.out.println("outPut"+outPut);
@@ -68,7 +67,6 @@ public class Parser
 		equation = equation.replaceAll("\\s","");
 		//equation = "("+equation+")"; 
 		String[] equationList = equation.split(""); 
-		equationList = parseNegatives(equationList); 
 
 		return equationList ; 
 	}
@@ -183,28 +181,6 @@ public class Parser
 		
 		return out ; 
 	}
-	/**parseNegatives
-	 * This method will decide what is negative and what is not. 
-	 * 
-	 * @param This is the equation input 
-	 * @return This returns a new equation that has _ as negative and - as subtraction ;  
-	 */
-	private String[] parseNegatives(String[] equationList)
-	{
-		int x = 0 ; 
-		while(x < equationList.length)
-		{
-			if(equationList[x].equals("-"))
-			{
-				if(getOperatorValue(equationList[x+1]) <=  0   )
-				{
-					equationList[x] = "_"; 
-				}
-			}
-			x++;
-		}
-		
-		return equationList; 
-	}
+
 
 }

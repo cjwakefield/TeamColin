@@ -14,7 +14,7 @@ public class Solver
 	public static void main(String args[])
 	{
 		Solver s = new Solver();
-		s.setParsed("x^2");
+		s.setParsed("2*x");
 		System.out.print(s.solveForX(2));
 	}
 	/**solve
@@ -41,7 +41,7 @@ public class Solver
 	public double solveForX(double x )
 	{
 		ArrayList<String> listEquation = SetX(x);
-		//System.out.println(listEquation);
+		System.out.println(listEquation);
 		return solveInner(listEquation) ; 
 	}
 	/**solveInner
@@ -53,23 +53,38 @@ public class Solver
 	private double solveInner(ArrayList<String> parsedEquation)
 	{
 		//System.out.println("parsedEquation"+ parsedEquation);
-
+		@SuppressWarnings("unchecked")
+		ArrayList<String> tempParsed =(ArrayList<String>) parsedEquation.clone(); 
 		ArrayList<String> hold = new ArrayList<String>(); 
-		for(int x = 0 ; x < parsedEquation.size() ; x++)
+		
+		while(tempParsed.size() > 0 )
 		{
-			//System.out.println("hold"+ hold);
+			System.out.println("hold"+ hold);
+			System.out.println("temp"+ tempParsed);
 			//System.out.println("holds "+ hold.size());
-
-			switch(parsedEquation.get(x))
+			String var = tempParsed.remove(0); 
+			switch(var)
 			{
 			case "^" : hold.add(pow( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
 			case "*" : hold.add(mult( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
 			case "/" : hold.add(div( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
-			case "+" : hold.add(add( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
-			case "-" : hold.add(sub( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ; 
-			case "_" : hold.add(invert(hold.remove(hold.size()-1 ))); break ; 
-			default : hold.add(parsedEquation.get(x));
+			case "+" : hold.add(add( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); break ;
+			case "-" :
+				try
+				{
+					
+					hold.add(sub( hold.remove(hold.size()-2 ) , hold.remove(hold.size()-1 ))); 
+				}catch(Exception e)
+				{
+					// very close 
+					Invert(tempParsed ,hold, -1); 
+				}
+				
+				
+				break ; 
+			default : hold.add(var);
 			}
+			
 		}
 		return Double.parseDouble(hold.get(0)) ; 
 	}
@@ -80,8 +95,9 @@ public class Solver
 		
 		for(int x = 0 ; x < parsedEquation.size(); x++)
 		{
-			if(parsedEquation.get(x).equals("x"))
+			if(parsedEquation.get(x).contains("x"))
 			{
+		
 				parsedEquation.set(x, xIn+""); 
 			}
 		}
@@ -131,17 +147,7 @@ public class Solver
 	{
 		return (Double.parseDouble(a)+ Double.parseDouble(b))+""; 
 	}
-	/**invert
-	 * This is a method that inverts 
-	 * 
-	 * @param This is the input string 
-	 * @param This is the input string 
-	 * @return returns a string that is inverted  
-	 */
-	private String invert(String a)
-	{
-		return (-Double.parseDouble(a)) +"";
-	}
+
 	/**sub
 	 * This is a method that subtracts two strings 
 	 * 
@@ -151,6 +157,24 @@ public class Solver
 	 */
 	private String sub(String a , String b )
 	{
-		return (Double.parseDouble(a)- Double.parseDouble(b))+""; 
+		
+			double one = Double.parseDouble(a) ; 
+			double two = Double.parseDouble(b) ; 
+			return (one - two) +"";
+			 
+		
+	}
+	private void Invert(ArrayList <String> tempParsed ,ArrayList <String> Hold, int versionOfOne)
+	{
+		String temp =  tempParsed.remove(0) ; 
+
+		try
+		{
+			Hold.add( ""+(Double.parseDouble(temp)*versionOfOne)); 
+
+		}catch(Exception e )
+		{
+			Invert(tempParsed ,Hold,versionOfOne * -1 ); 
+		}
 	}
 }
