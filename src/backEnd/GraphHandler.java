@@ -5,13 +5,15 @@ import java.util.ArrayList;
 
 public class GraphHandler
 {
-	private int screenWidth , screenHeight , screenMiddleW , screenMiddleH ; 
+	private int screenWidth , screenHeight , screenMiddleW , screenMiddleH ,Pwidth  ,Pheight ; 
 	private double scale ; 
 	private ArrayList<Graph> equations;  
-	public GraphHandler(int width , int height )
+	public GraphHandler(int screenwidth , int screenheight  , int Pwidth ,int  Pheight )
 	{
-		screenWidth = width ; 
-		screenHeight = height ; 
+		this.Pwidth = Pwidth ; 
+		this.Pheight = Pheight; 
+		this.screenWidth = screenwidth +Pwidth; 
+		this.screenHeight = screenheight+Pheight ; 
 		screenMiddleW = screenWidth/2; 
 		screenMiddleH = screenHeight/2; 
 		this.equations = new ArrayList<>(); 
@@ -29,8 +31,16 @@ public class GraphHandler
 	}
 	private void DrawBackGround(Graphics2D g2)
 	{
+
+		g2.drawLine(0, 0, screenWidth, 0);
+		g2.drawLine(0, 0, 0, screenHeight);
+		g2.drawLine(0, screenHeight-1, screenWidth-1,screenHeight-1 );
+		g2.drawLine(screenWidth-1, 0, screenWidth-1,screenHeight-1 );
+		
 		g2.drawLine(screenWidth/2, 0, screenWidth/2, screenHeight);
 		g2.drawLine(0, screenHeight/2, screenWidth, screenHeight/2);
+		
+		
 		int dashedLineSpace = (int) (1/scale) ; 
 		if(dashedLineSpace > 1 )
 		{
@@ -54,6 +64,7 @@ public class GraphHandler
 			for(int x = screenWidth/2 ; x > 0; x-= dashedLineSpace)
 				g2.drawLine(x, (screenHeight/2)-3, x, (screenHeight/2)+3);
 		}
+
 	
 	}
 	public void add(String equation)

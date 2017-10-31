@@ -1,6 +1,7 @@
 package Screen;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import backEnd.Graph;
 import backEnd.GraphHandler;
@@ -12,7 +13,8 @@ public class Main_Screen extends JPanel implements Runnable
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-    private int screenWidth , screenHeight  , graphStart , graphEnd; 
+    private int screenWidth , screenHeight  , graphStart , graphEnd, GraphWLocation 
+    , GraphHLocation, GraphWidth ,GraphHeight; 
     private Thread t ; 
     GraphHandler gh ; 
     private boolean running = true  ; 
@@ -27,45 +29,54 @@ public class Main_Screen extends JPanel implements Runnable
     	//
     	screenWidth = 500 ; 
     	screenHeight = 500 ; 
-    	graphStart = -screenWidth/2; 
-    	graphEnd = screenWidth/2; 
+    	GraphWidth = 400 ; 
+    	GraphHeight = 400 ;
+    	GraphWLocation = 0 ; 
+    	GraphHLocation = 0; 
+    	graphStart = -(GraphWidth+GraphWLocation)/2; 
+    	graphEnd = (GraphHeight+GraphHLocation)/2; 
 
     	//settings for the JFrame
         frame = new JFrame();
         frame.setLayout(null);
-        frame.setResizable(false);
+        //frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(this); 
-        
         this.setDoubleBuffered(true);
-        this.setBounds(0,0,screenWidth, screenHeight);
+        this.setBounds(GraphWLocation,GraphHLocation,GraphWidth, GraphHeight);
         this.setVisible(true);
+        frame.add(this); 
         
         
         
 		 t = new Thread(this);
         //keep at the end 
-	    frame.getContentPane().setPreferredSize(new Dimension(screenWidth ,screenHeight ));
-        frame.pack(); 
-        frame.setSize(screenWidth, screenHeight);
+	    frame.setPreferredSize(new Dimension(screenWidth, screenHeight));
         frame.setLocationRelativeTo(null);
+        frame.pack();
         frame.setVisible(true);
+
+
         
         //classes 
         //graph
-        gh = new GraphHandler(screenWidth,screenHeight );
+        gh = new GraphHandler(GraphWidth,GraphHeight ,GraphWLocation , GraphHLocation  );
     	gh.add("x^2+1");
-    	gh.add("x^7---x^2");
-    	gh.setScale(.01);
+    	gh.add("x^2+x^7");
+    	//gh.add("x^7---x^2");
+    	gh.setScale(.1);
     	//list on screen  
-    	//JList<Graph> myList = new JList<Graph>(data);
+    	//JList<Graph> graphList = new JList<Graph>();
+    	//JScrollPane listScroller = new JScrollPane(graphList);
+    	//listScroller.setPreferredSize(new Dimension(50, screenHeight));
     }
     @Override
     public void paintComponent(Graphics g)
     {
+    	
     	Graphics2D g2 = (Graphics2D)g ; 
+    	g2.clearRect(0, 0, screenWidth, screenHeight);
     	gh.Draw(g2 ,graphStart , graphEnd ); 
-
+    	//System.out.print("cats");
     }
 	@Override
 	public void run()  
@@ -80,9 +91,8 @@ public class Main_Screen extends JPanel implements Runnable
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
+				running = false ;
 			}
-			running = false ;
-	
 		}
 	}
 	public void update()

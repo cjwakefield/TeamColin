@@ -41,7 +41,7 @@ public class Solver
 	public double solveForX(double x )
 	{
 		ArrayList<String> listEquation = SetX(x);
-		System.out.println(listEquation);
+		//System.out.println(listEquation);
 		return solveInner(listEquation) ; 
 	}
 	/**solveInner
@@ -59,8 +59,8 @@ public class Solver
 		
 		while(tempParsed.size() > 0 )
 		{
-			System.out.println("hold"+ hold);
-			System.out.println("temp"+ tempParsed);
+			//System.out.println("hold"+ hold);
+			//System.out.println("temp"+ tempParsed);
 			//System.out.println("holds "+ hold.size());
 			String var = tempParsed.remove(0); 
 			switch(var)
