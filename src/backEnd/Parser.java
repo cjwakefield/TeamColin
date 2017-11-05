@@ -86,7 +86,7 @@ public class Parser
 				tmp += IntList.get(x); 
 			}
 			outPut.add(tmp); 
-		}
+		} 
 	}
 	/**HandleClosing
 	 * This method deals with the closing of a () pair 

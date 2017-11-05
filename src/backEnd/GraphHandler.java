@@ -8,10 +8,8 @@ public class GraphHandler
 	private int screenWidth , screenHeight , screenMiddleW , screenMiddleH ,Pwidth  ,Pheight ; 
 	private double scale ; 
 	private ArrayList<Graph> equations;  
-	public GraphHandler(int screenwidth , int screenheight  , int Pwidth ,int  Pheight )
+	public GraphHandler(int screenwidth , int screenheight   )
 	{
-		this.Pwidth = Pwidth ; 
-		this.Pheight = Pheight; 
 		this.screenWidth = screenwidth +Pwidth; 
 		this.screenHeight = screenheight+Pheight ; 
 		screenMiddleW = screenWidth/2; 
@@ -78,5 +76,9 @@ public class GraphHandler
 	public void setScale(double scale )
 	{
 		this.scale = scale; 
+	}
+	public double getScale( )
+	{
+		return scale; 
 	}
 }
