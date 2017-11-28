@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 
 import backEnd.Graph;
 import backEnd.GraphHandler;
+import backEnd.IO;
 
 public class Main_Screen extends JPanel implements Runnable , MouseListener  , KeyListener ,MouseWheelListener
 {
@@ -23,19 +24,22 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
     private int screenWidth , screenHeight  , graphStart , graphEnd, GraphWLocation 
     , GraphHLocation, GraphWidth ,GraphHeight; 
     private Thread t ; 
+    private Thread io ; 
+    private IO Input ; 
     GraphHandler gh ; 
-    private boolean running = true  ; 
-    
+    private boolean[] running = {true } ; 
     public Main_Screen(String title)
     {
         init();
         t.start(); // calls the run() method to start the loop  
+        io.start(); 
+
     }
     private void init()
     {
     	//
-    	screenWidth = 500 ; 
-    	screenHeight = 500 ; 
+    	screenWidth = 410 ; 
+    	screenHeight = 430 ; 
     	GraphWidth = 400 ; 
     	GraphHeight = 400 ;
     	GraphWLocation = 0 ; 
@@ -60,6 +64,7 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
 	    frame.setPreferredSize(new Dimension(screenWidth, screenHeight));
         frame.setLocationRelativeTo(null);
         frame.pack();
+        frame.setResizable(false); 
         frame.setVisible(true);
 
 
@@ -68,11 +73,12 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
         addMouseWheelListener(this);
         //graph
         gh = new GraphHandler(GraphWidth,GraphHeight);
-    	gh.add("x^2+1");
-    	gh.add("x^2+x^7");
-    	gh.add("x^3*3*x");
-    	//gh.add("x^7---x^2");
+        
     	gh.setScale(.05);
+        Input = new IO(gh , running); 
+        io = new Thread(Input); 
+
+
     	//list on screen  
     	//JList<Graph> graphList = new JList<Graph>();
     	//JScrollPane listScroller = new JScrollPane(graphList);
@@ -84,13 +90,20 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
     	
     	Graphics2D g2 = (Graphics2D)g ; 
     	g2.clearRect(0, 0, screenWidth, screenHeight);
+    	try
+    	{
     	gh.Draw(g2 ,graphStart , graphEnd ); 
+    	}
+    	catch(Exception e )
+    	{
+    		gh.remove(gh.Size() -1);
+    	}
     	//System.out.print("cats");
     }
 	@Override
 	public void run()  
 	{
-		while(running)
+		while(running[0])
 		{
 			this.update(); 
 			this.repaint();
@@ -100,7 +113,7 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();
-				running = false ;
+				running[0] = false ;
 			}
 
 			//System.out.println("running");

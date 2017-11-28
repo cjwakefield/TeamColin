@@ -9,29 +9,54 @@ import java.util.*;
  * that contains a main method.
  * @return String that has been entered in by user.
  */
-public class IO 
+public class IO implements Runnable 
 {
 	private Scanner kboard;
+	private GraphHandler gh ; 
+	private boolean[] running ; 
 	
+	public IO(GraphHandler gh , boolean[] running)
+	{
+		this.gh = gh ; 
+		this.running = running ; 
+	}
 	/**
 	 * This method asks the user to input a polynomial or 'e' to see an example.
 	 * @return The polynomial that has been entered by the user.
 	 */
-	public String receiveInput() 
+	public void receiveInput() 
 	{
+		//Parser p = new Parser() ; 
 		kboard = new Scanner(System.in);
 		System.out.println("***POLYNOMIAL CALCULATOR***");
-		System.out.print("Enter in a polynomial or 'e' to see an example: ");
+		System.out.print("Enter in a polynomial or 'h' for help: ");
 		String input = kboard.nextLine();
-		if(input.charAt(0) == 'e' || input.charAt(0) == 'E') 
+		
+		while(!input.equalsIgnoreCase("q"))
 		{
-			System.out.println("\nIf you wanted to type in 3x^2 + 2x + 1, it would be:"
-								+ "\n\t3*x^2+2*x+1");
-			System.out.print("Enter in a polynomial: ");
-			return kboard.nextLine();
+			if(input.equalsIgnoreCase("h")) 
+			{
+				System.out.println("\nIf you wanted to type in 3x^2 + 2x + 1, it would be:"
+									+ "\n\t3*x^2+2*x+1");
+			}
+			else
+			{
+				gh.add(input);
+			}
+			
+			
+			System.out.print("Enter in a polynomial or 'h' for help: ");
+			input = kboard.nextLine();
 		}
-		else
-			return input;
+	}
+
+	@Override
+	public void run() 
+	{
+		receiveInput();
+		running[0] = false ; 
+		System.out.println(running[0]);
+
 	}
 
 }

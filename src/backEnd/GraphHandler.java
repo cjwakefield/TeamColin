@@ -77,6 +77,10 @@ public class GraphHandler
 	{
 		this.scale = scale; 
 	}
+	public int Size()
+	{
+		return equations.size(); 
+	}
 	public double getScale( )
 	{
 		return scale; 
