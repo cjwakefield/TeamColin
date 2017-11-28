@@ -38,8 +38,8 @@ public class Main_Screen extends JPanel implements Runnable , MouseListener  , K
     private void init()
     {
     	//
-    	screenWidth = 410 ; 
-    	screenHeight = 430 ; 
+    	screenWidth = 406 ; 
+    	screenHeight = 429 ; 
     	GraphWidth = 400 ; 
     	GraphHeight = 400 ;
     	GraphWLocation = 0 ; 
