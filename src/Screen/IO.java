@@ -1,8 +1,10 @@
-package backEnd;
+package Screen;
 import java.util.*;
 /*
  * By: Nathan Sellers
 */
+
+import backEnd.GraphHandler;
 
 /**
  * This class serves as a view class for Main_Screen, which is a class
