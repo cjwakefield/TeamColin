@@ -52,7 +52,7 @@ public class IO implements Runnable
 				
 				}catch(Exception e)
 				{
-					System.out.print("You messed up ! ");
+					System.out.println("You messed up! ");
 
 				}
 			}
