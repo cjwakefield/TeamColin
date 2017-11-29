@@ -85,4 +85,8 @@ public class GraphHandler
 	{
 		return scale; 
 	}
+	public String getEquation(int x )
+	{
+		return equations.get(x).toString(); 
+	}
 }

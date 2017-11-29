@@ -31,15 +31,30 @@ public class IO implements Runnable
 		//Parser p = new Parser() ; 
 		kboard = new Scanner(System.in);
 		System.out.println("***POLYNOMIAL CALCULATOR***");
-		System.out.print("Enter in a polynomial or 'h' for help: ");
+		System.out.print("Enter in a polynomial or 'r' to remove : ");
 		String input = kboard.nextLine();
 		
 		while(!input.equalsIgnoreCase("q"))
 		{
-			if(input.equalsIgnoreCase("h")) 
+			if(input.equalsIgnoreCase("r")) 
 			{
-				System.out.println("\nIf you wanted to type in 3x^2 + 2x + 1, it would be:"
-									+ "\n\t3*x^2+2*x+1");
+				try
+				{
+				
+				for(int x= 0 ; x < gh.Size() ; x++)
+				{
+					System.out.println(x+": "+gh.getEquation(x)); 
+				}
+				System.out.print("input integer value to remove : ");
+
+				int tmp = Integer.parseInt(kboard.nextLine());
+				gh.remove(tmp);
+				
+				}catch(Exception e)
+				{
+					System.out.print("You messed up ! ");
+
+				}
 			}
 			else
 			{
@@ -47,7 +62,7 @@ public class IO implements Runnable
 			}
 			
 			
-			System.out.print("Enter in a polynomial or 'h' for help: ");
+			System.out.print("Enter in a polynomial or 'r' to remove : ");
 			input = kboard.nextLine();
 		}
 	}

@@ -30,4 +30,8 @@ public class Graph
 			g2.drawLine( (int)(GraphMiddleW+ Counter) , (int)(GraphMiddleH-y), (int)(GraphMiddleW+Counter+1), (int)(GraphMiddleH-y2)); 
 		}
 	}
+	public String toString()
+	{
+		return equation ;
+	}
 }
